@@ -5,9 +5,9 @@ import { Toaster } from "@/components/ui/sonner";
 
 export default function Template({ children }: { children: ReactNode }) {
     return (
-        <main>
+        <main className="min-h-screen bg-gradient-to-b from-background to-background/95">
             <Navbar />
-            <div className="md:mx-16 lg:mx-24 xl:mx-28 min-h-screen">
+            <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8 max-w-7xl">
                 {children}
             </div>
             <Footer />

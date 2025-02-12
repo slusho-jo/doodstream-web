@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "./ui/button";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -14,9 +14,14 @@ const CopyButton = ({
     text?: string;
     children?: ReactNode;
 }) => {
-    const textToCopy = text || window.location.href;
+    const [currentUrl, setCurrentUrl] = useState("");
+
+    useEffect(() => {
+        setCurrentUrl(window.location.href);
+    }, []);
 
     const onCopy = () => {
+        const textToCopy = text || currentUrl;
         navigator.clipboard.writeText(textToCopy);
         toast.success("Copied to clipboard");
     };

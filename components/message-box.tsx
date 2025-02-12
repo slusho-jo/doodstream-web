@@ -44,23 +44,23 @@ const MessageBox = ({
 
     return (
         <Center>
-            <Card className="border-0 lg:max-w-screen-md">
+            <Card className="w-full max-w-lg border bg-card/50 backdrop-blur-sm">
                 <CardHeader>
-                    <CardTitle className="flex flex-col items-center text-2xl break-words">
-                        <InfoIcon
-                            className={cn("size-14 mb-2", color)}
-                        ></InfoIcon>
-                        {title}
+                    <CardTitle className="flex flex-col items-center gap-4 text-2xl">
+                        <InfoIcon className={cn("h-12 w-12", color)} />
+                        <span className="text-center">{title}</span>
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="text-center">{children}</CardContent>
-                <CardFooter className="flex flex-col items-center">
-                    {countdown && (
-                        <div className="text-xs text-gray-500 uppercase">
+                <CardContent className="text-center text-muted-foreground">
+                    {children}
+                </CardContent>
+                {countdown && (
+                    <CardFooter className="flex justify-center">
+                        <p className="text-xs text-muted-foreground/60 tracking-wider">
                             Redirecting to home in {count} seconds
-                        </div>
-                    )}
-                </CardFooter>
+                        </p>
+                    </CardFooter>
+                )}
             </Card>
         </Center>
     );

@@ -39,11 +39,7 @@ export async function generateMetadata(
 
     const file = data.result[0];
     const title = `${file.title} - ${SITENAME}`;
-    const description = `${file.title} - Duration: ${humanDuration(
-        file.length
-    )} - Views: ${file.views} views - Size: ${humanSize(
-        file.size
-    )} - Uploaded On ${new Date(file.uploaded + ".000Z").toLocaleString()}`;
+    const description = `${file.title} - Duration: ${humanDuration(file.length)}`;
     const image = file.splash_img;
     const previousOgImages = (await parent).openGraph?.images || [];
     const previousTwImages = (await parent).twitter?.images || [];
@@ -80,78 +76,33 @@ export default async function Video({ params }: PageProps) {
 
     const file = data.result[0];
     return (
-        <div className="grid col-span-full gap-4 md:gap-4 md:mx-10">
+        <div className="grid gap-4 max-w-[1920px] mx-auto">
             <iframe
-                className="w-full h-[30vh] md:h-[55vh] lg:h-[70vh]"
+                className="w-full aspect-video rounded-lg shadow-lg"
                 src={`https://${upstream}/${file.protected_embed}`}
                 scrolling="no"
                 frameBorder={0}
                 allowFullScreen={true}
             ></iframe>
-            <Card className="mx-2 mb-8">
-                <CardHeader>
-                    <CardTitle className="text-xl md:text-3xl font-bold">
+            <Card className="border-0 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/50">
+                <CardHeader className="pb-2">
+                    <CardTitle className="text-xl md:text-2xl font-bold">
                         {file.title}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-flow-row lg:grid-flow-col">
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <LapTimerIcon className="size-4 md:size-5"></LapTimerIcon>
-                                        Duration
-                                    </TableCell>
-                                    <TableCell>
-                                        {humanDuration(file.length)}
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <RocketIcon className="size-4 md:size-5"></RocketIcon>
-                                        Views
-                                    </TableCell>
-                                    <TableCell>{file.views}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <CubeIcon className="size-4 md:size-5"></CubeIcon>
-                                        Size
-                                    </TableCell>
-                                    <TableCell>
-                                        {humanSize(file.size)}
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <CalendarIcon className="size-4 md:size-5"></CalendarIcon>
-                                        Uploaded
-                                    </TableCell>
-                                    <TableCell>
-                                        {new Date(
-                                            file.uploaded + ".000Z"
-                                        ).toLocaleString()}
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                        <div className="grid grid-cols-2 gap-2 mt-8 md:grid-cols-3 lg:grid-cols-2 lg:ml-4 lg:my-4">
-                            <Link
-                                href={`https://${upstream}/d/${file.filecode}`}
-                                className="col-span-full md:col-auto lg:col-span-full"
-                            >
-                                <Button className="w-full">
-                                    <DownloadIcon className="size-4 me-1 mb-1"></DownloadIcon>
-                                    Download
-                                </Button>
-                            </Link>
-                            <CopyButton className="bg-secondary lg:col-span-full">
-                                <Share1Icon className="size-4 me-1 mb-0.5"></Share1Icon>
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <LapTimerIcon className="size-4" />
+                            <span>{humanDuration(file.length)}</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <CopyButton className="bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
+                                <Share1Icon className="size-4 me-2" />
                                 Share
                             </CopyButton>
                             <LikeButton
-                                className="lg:col-span-full"
+                                className="bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
                                 useButton={true}
                                 file={file}
                             />
@@ -159,10 +110,11 @@ export default async function Video({ params }: PageProps) {
                     </div>
                 </CardContent>
             </Card>
-            <h1 className="text-2xl font-bold text-center my-4">
-                Related Videos
-            </h1>
-            <SearchCardList query={file.title.split(" ")[0]} />
+            
+            <div className="space-y-4 mt-4">
+                <h2 className="text-xl font-semibold">Related Videos</h2>
+                <SearchCardList query={file.title.split(" ")[0]} />
+            </div>
         </div>
     );
 }

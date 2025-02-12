@@ -7,6 +7,23 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+interface LikeButtonProps {
+    className?: string;
+    useButton?: boolean;
+    file: {
+        file_code: string;
+        filecode?: string;
+        title: string;
+        [key: string]: any;
+    };
+}
+
+interface IconButtonProps {
+    className?: string;
+    liked: boolean;
+    onLike: () => void;
+}
+
 const LButton = ({ className, liked, onLike }: any) => {
     return (
         <Button
@@ -28,7 +45,7 @@ const LButton = ({ className, liked, onLike }: any) => {
     );
 };
 
-const LIcon = ({ className, liked, onLike }: any) => {
+const LIcon = ({ className, liked, onLike }: IconButtonProps) => {
     return (
         <div className={cn(className, "cursor-pointer")} onClick={onLike}>
             {liked ? (
@@ -40,15 +57,7 @@ const LIcon = ({ className, liked, onLike }: any) => {
     );
 };
 
-const LikeButton = ({
-    className,
-    useButton,
-    file,
-}: {
-    className?: string;
-    useButton?: boolean;
-    file: any;
-}) => {
+const LikeButton = ({ className, useButton = false, file }: LikeButtonProps) => {
     const file_code = file.file_code || file.filecode;
     const [liked, setLiked] = useState(false);
 
@@ -69,9 +78,9 @@ const LikeButton = ({
             setLiked(false);
         } else {
             const searializedFile = JSON.stringify({
-                file_code,
                 liked_on: Date.now(),
                 ...file,
+                file_code, // Moved after spread to avoid overwrite
             });
             localStorage.setItem("liked_" + file_code, searializedFile);
 
@@ -85,11 +94,23 @@ const LikeButton = ({
 
     if (useButton) {
         return (
-            <LButton
-                className={className}
-                liked={liked}
-                onLike={onLike}
-            ></LButton>
+            <Button
+                variant={liked ? "default" : "ghost"}
+                size="sm"
+                className={cn(
+                    "group transition-all duration-200",
+                    liked && "bg-red-500 hover:bg-red-600",
+                    className
+                )}
+                onClick={onLike}
+            >
+                {liked ? (
+                    <HeartFilledIcon className="size-4 mr-1 group-hover:scale-110 transition-transform" />
+                ) : (
+                    <HeartIcon className="size-4 mr-1 group-hover:scale-110 transition-transform" />
+                )}
+                <span className="sr-only">{liked ? "Unlike" : "Like"} video</span>
+            </Button>
         );
     }
 

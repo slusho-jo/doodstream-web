@@ -6,12 +6,16 @@ import { Input } from "../ui/input";
 import React from "react";
 import { cn } from "@/lib/utils";
 
-const SearchInput = ({ className }: { className?: string }) => {
+interface SearchInputProps {
+    className?: string;
+}
+
+const SearchInput = ({ className }: SearchInputProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const [search, setSearch] = React.useState(searchParams.get("q") || "");
-    const [timer, setTimer] = React.useState(null as any);
+    const [timer, setTimer] = React.useState<NodeJS.Timeout | null>(null);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newSearch = e.target.value.trim();
@@ -41,15 +45,21 @@ const SearchInput = ({ className }: { className?: string }) => {
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} role="search">
+            <label htmlFor="search" className="sr-only">
+                Search videos
+            </label>
             <Input
-                aria-label="Search"
-                className={cn(className)}
+                id="search"
                 type="search"
-                placeholder="Search"
+                placeholder="Search videos..."
+                aria-label="Search videos"
+                className={cn("w-full", className)}
                 onChange={onChange}
-                role="searchbox"
                 defaultValue={search}
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
             />
         </form>
     );

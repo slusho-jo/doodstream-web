@@ -3,11 +3,11 @@
     "version": "0.1.0",
     "private": false,
     "scripts": {
-        "dev": "next dev --hostname 0.0.0.0",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint",
-        "pretty": "prettier --write . --ignore-path .gitignore"
+        "dev": "yarn next dev --hostname 0.0.0.0",
+        "build": "yarn next build",
+        "start": "yarn next start",
+        "lint": "yarn next lint",
+        "pretty": "yarn prettier --write . --ignore-path .gitignore"
     },
     "dependencies": {
         "@radix-ui/react-dialog": "^1.0.5",
@@ -16,16 +16,17 @@
         "@radix-ui/react-slot": "^1.0.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
-        "next": "14.0.4",
+        "next": "^14.2.23",
         "next-themes": "^0.2.1",
         "react": "^18",
         "react-dom": "^18",
         "sonner": "^1.3.1",
         "tailwind-merge": "^2.2.0",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "@vercel/node": "^3.0.0"
     },
     "devDependencies": {
-        "@cloudflare/next-on-pages": "^1.8.3",
+        "@cloudflare/next-on-pages": "^1.9.0",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
@@ -56,5 +57,12 @@
         "doodstream",
         "doodstream-player",
         "nextjs"
-    ]
+    ],
+    "resolutions": {
+        "tar": "^6.2.1",
+        "path-to-regexp": "^6.2.3",
+        "undici": "^5.28.5",
+        "cookie": "^0.7.0"
+    },
+    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

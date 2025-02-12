@@ -1,26 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import MessageBox from "@/components/message-box";
 import VideoCard from "@/components/video-card";
 
 function getLikedVideos() {
-    "use client";
-    const likedVideos = Object.entries(localStorage).filter((key) =>
-        key[0].startsWith("liked_")
-    );
-    const sortedLikedVideos = likedVideos.sort((a, b) => {
-        const aFile = JSON.parse(a[1] || "{}");
-        const bFile = JSON.parse(b[1] || "{}");
+    try {
+        const likedVideos = Object.entries(localStorage).filter((key) =>
+            key[0].startsWith("liked_")
+        );
+        const sortedLikedVideos = likedVideos.sort((a, b) => {
+            const aFile = JSON.parse(a[1] || "{}");
+            const bFile = JSON.parse(b[1] || "{}");
 
-        return bFile.liked_on - aFile.liked_on;
-    });
+            return bFile.liked_on - aFile.liked_on;
+        });
 
-    return sortedLikedVideos.map((video) => JSON.parse(video[1]));
+        return sortedLikedVideos.map((video) => JSON.parse(video[1]));
+    } catch {
+        return [];
+    }
 }
 
 export default function Liked() {
-    const likedVideos = getLikedVideos();
+    const [likedVideos, setLikedVideos] = useState<any[]>([]);
+
+    useEffect(() => {
+        setLikedVideos(getLikedVideos());
+    }, []);
 
     if (likedVideos.length === 0) {
         return (
@@ -30,10 +38,13 @@ export default function Liked() {
         );
     }
     return (
-        <div className="grid grid-cols-2 gap-0 md:my-3 md:grid-cols-3 md:gap-3 xl:grid-cols-4">
-            {likedVideos.map((file) => (
-                <VideoCard key={file.file_code} video={file} />
-            ))}
+        <div className="space-y-6">
+            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Liked Videos</h1>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {likedVideos.map((file) => (
+                    <VideoCard key={file.file_code} video={file} />
+                ))}
+            </div>
         </div>
     );
 }

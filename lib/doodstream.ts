@@ -21,14 +21,18 @@ class Doodstream {
             key: undefined,
         }
     ) {
-        baseUrl = baseUrl || DOODSTREAM_BASE_URL;
-        key = key || DOODSTREAM_API_KEY;
+        this.baseUrl = baseUrl || DOODSTREAM_BASE_URL || 'https://doodapi.com';
+        this.key = key || DOODSTREAM_API_KEY || '';
 
-        if (!baseUrl) throw new Error("Doodstream Base URL not set");
-        if (!key) throw new Error("Doodstream Key not set");
-
-        this.baseUrl = baseUrl;
-        this.key = key;
+        // Only throw in non-development environments
+        if (process.env.NODE_ENV !== 'development') {
+            if (!this.baseUrl) {
+                throw new Error("Doodstream Base URL not set");
+            }
+            if (!this.key) {
+                throw new Error("Doodstream Key not set");
+            }
+        }
     }
 
     serializeQueryParams(params: { [key: string]: string }) {

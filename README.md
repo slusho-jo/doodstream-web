@@ -1,6 +1,6 @@
-# doodstream-web 🎥
+# DoodTube 🎥
 
-An SSR video streaming frontend which uses doodstream.com as a backend. It is built using [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
+A server-side rendered video streaming frontend using DoodTube as a backend. Built with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
 ## Features
 
@@ -16,14 +16,14 @@ An SSR video streaming frontend which uses doodstream.com as a backend. It is bu
 
 ## Live Demo
 
-A live demo of the project is available at [https://doodstream-web.pages.dev](https://doodstream-web.pages.dev/).
+A live demo of the project is available at [https://doodtube.pages.dev](https://doodtube.pages.dev/).
 
 ## Configuration
 
 The following environment variables are required to run the project:
 
--   `DOODSTREAM_API_KEY`: API key for doodstream.com
--   `DOODSTREAM_API_URL`: API URL for doodstream.com (default: `https://doodapi.com`)
+-   `DOODSTREAM_API_KEY`: Your DoodTube API key
+-   `DOODSTREAM_BASE_URL`: API base URL (default: `https://doodapi.com`)
 -   `SITENAME`: Name of the website (default: `DoodWeb`)
 
 ## Development
@@ -31,8 +31,8 @@ The following environment variables are required to run the project:
 1. Clone the repository
 
 ```bash
-git clone <repo-url> doodstream-web
-cd doodstream-web
+git clone <repo-url> doodtube
+cd doodtube
 ```
 
 2. Install dependencies
@@ -54,8 +54,8 @@ npm run dev
 1. Clone the repository
 
 ```bash
-git clone <repo-url> doodstream-web
-cd doodstream-web
+git clone <repo-url> doodtube
+cd doodtube
 ```
 
 2. Install dependencies
@@ -80,7 +80,7 @@ npm run start
 
 ## Deployment on Cloudflare Pages
 
-1. Fork the [repository](https://github.com/viperadnan-git/doodstream-web/fork) on GitHub.
+1. Fork the [repository](https://github.com/viperadnan-git/doodtube/fork) on GitHub.
 2. Create a new project on [Cloudflare Pages](https://pages.cloudflare.com/).
 3. Connect your GitHub account with Cloudflare Pages.
 4. Select the forked repository and click on `Begin Setup`.
@@ -100,7 +100,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Disclaimer
 
-This project is not affiliated with https://doodstream.com in any way. It is just a frontend for their API.
+This project is not affiliated with DoodTube or its services. It is an independent frontend implementation.
 
 ## License
 

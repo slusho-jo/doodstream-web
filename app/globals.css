@@ -24,6 +24,7 @@
         --input: 20 5.9% 90%;
         --ring: 24.6 95% 53.1%;
         --radius: 6px;
+        --transition-duration: 0.2s;
     }
 
     .dark,
@@ -48,11 +49,12 @@
         --input: 12 6.5% 15.1%;
         --ring: 20.5 90.2% 48.2%;
     }
-}
 
-@layer base {
     * {
         @apply border-border;
+        transition: background-color var(--transition-duration) ease,
+                    border-color var(--transition-duration) ease,
+                    color var(--transition-duration) ease;
     }
     body {
         @apply bg-background text-foreground;
