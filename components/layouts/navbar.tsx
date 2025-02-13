@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -148,9 +149,6 @@ const Breadcrumb = () => {
     const segments = pathname.split('/').filter(Boolean);
     const [videoTitle, setVideoTitle] = useState<string>("");
     
-    // Don't show breadcrumb on home page
-    if (pathname === '/') return null;
-    
     useEffect(() => {
         const fetchVideoTitle = async (videoId: string) => {
             try {
@@ -215,7 +213,7 @@ const Breadcrumb = () => {
     );
 };
 
-const NavbarContent = ({ folders }: { folders: FolderType[] }) => {
+export default function NavbarContent({ folders }: { folders: FolderType[] }) {
     return (
         <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6 lg:px-8">
@@ -253,11 +251,13 @@ const NavbarContent = ({ folders }: { folders: FolderType[] }) => {
     );
 };
 
-const Navbar = async () => {
-    const data = await doodstream.listFolders({ fld_id: "" });
-    const folders = data.result.folders;
+const NavbarServer = dynamic(() => import("./navbar-server"), {
+    ssr: true,
+    loading: () => <NavbarContent folders={[]} />
+});
 
-    return <NavbarContent folders={folders} />;
-};
+export function Navbar() {
+    return <NavbarServer />;
+}
 
-export default Navbar;
+export { NavbarContent };
