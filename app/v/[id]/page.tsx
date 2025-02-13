@@ -80,89 +80,38 @@ export default async function Video({ params }: PageProps) {
 
     const file = data.result[0];
     return (
-        <div className="grid col-span-full gap-4 md:gap-4 md:mx-10">
-            <iframe
-                className="w-full h-[30vh] md:h-[55vh] lg:h-[70vh]"
-                src={`https://${upstream}/${file.protected_embed}`}
-                scrolling="no"
-                frameBorder={0}
-                allowFullScreen={true}
-            ></iframe>
-            <Card className="mx-2 mb-8">
-                <CardHeader>
-                    <CardTitle className="text-xl md:text-3xl font-bold">
-                        {file.title}
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid grid-flow-row lg:grid-flow-col">
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <LapTimerIcon className="size-4 md:size-5"></LapTimerIcon>
-                                        Duration
-                                    </TableCell>
-                                    <TableCell>
-                                        {humanDuration(file.length)}
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <RocketIcon className="size-4 md:size-5"></RocketIcon>
-                                        Views
-                                    </TableCell>
-                                    <TableCell>{file.views}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <CubeIcon className="size-4 md:size-5"></CubeIcon>
-                                        Size
-                                    </TableCell>
-                                    <TableCell>
-                                        {humanSize(file.size)}
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell className="flex gap-2 items-center">
-                                        <CalendarIcon className="size-4 md:size-5"></CalendarIcon>
-                                        Uploaded
-                                    </TableCell>
-                                    <TableCell>
-                                        {new Date(
-                                            file.uploaded + ".000Z"
-                                        ).toLocaleString()}
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                        <div className="grid grid-cols-2 gap-2 mt-8 md:grid-cols-3 lg:grid-cols-2 lg:ml-4 lg:my-4">
-                            <Link
-                                href={`https://${upstream}/d/${file.filecode}`}
-                                className="col-span-full md:col-auto lg:col-span-full"
-                            >
-                                <Button className="w-full">
-                                    <DownloadIcon className="size-4 me-1 mb-1"></DownloadIcon>
-                                    Download
-                                </Button>
-                            </Link>
-                            <CopyButton className="bg-secondary lg:col-span-full">
-                                <Share1Icon className="size-4 me-1 mb-0.5"></Share1Icon>
-                                Share
-                            </CopyButton>
-                            <LikeButton
-                                className="lg:col-span-full"
-                                useButton={true}
-                                file={file}
-                            />
+        <div className="max-w-7xl mx-auto px-4">
+            <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2">
+                    <div className="relative pt-[56.25%]">
+                        <iframe
+                            className="absolute inset-0 w-full h-full"
+                            src={`https://${upstream}/${file.protected_embed}`}
+                            allowFullScreen
+                        />
+                    </div>
+                    
+                    <div className="mt-4">
+                        <h1 className="text-2xl font-bold">{file.title}</h1>
+                        <div className="flex items-center justify-between mt-2">
+                            <div className="flex items-center space-x-4">
+                                <span>{file.views} views</span>
+                                <span>•</span>
+                                <span>{new Date(file.uploaded + ".000Z").toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <LikeButton file={file} useButton />
+                                <CopyButton>Share</CopyButton>
+                            </div>
                         </div>
                     </div>
-                </CardContent>
-            </Card>
-            <h1 className="text-2xl font-bold text-center my-4">
-                Related Videos
-            </h1>
-            <SearchCardList query={file.title.split(" ")[0]} />
+                </div>
+
+                <div className="lg:col-span-1">
+                    <h2 className="text-xl font-semibold mb-4">Related Videos</h2>
+                    <SearchCardList query={file.title.split(" ")[0]} />
+                </div>
+            </div>
         </div>
     );
 }

@@ -138,31 +138,26 @@ const Navbar = async () => {
     const folders = data.result.folders;
 
     return (
-        <div className="flex justify-between items-center px-4 py-3 border-b-[1px]">
-            <div className="md:hidden">
-                <SideNav folders={folders}></SideNav>
-            </div>
-            <div>
-                <Link
-                    href="/"
-                    className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl"
-                >
-                    {SITENAME}
-                </Link>
-            </div>
-            <div className="flex flex-row space-x-2">
-                <div className="hidden md:flex items-center gap-4">
-                    <Link
-                        href="/liked"
-                        className="hover:bg-accent px-2 py-1.5 rounded-md"
-                        aria-label="Open liked videos"
-                    >
-                        Liked Videos
-                    </Link>
-                    <NavMenu folders={folders}></NavMenu>
+        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex justify-between items-center px-4 py-3 border-b-[1px]">
+                <div className="md:hidden">
+                    <SideNav folders={folders} />
                 </div>
-                <SearchInput className="hidden md:block w-full md:w-[260px] lg:w-[300px]" />
-                <SearchDialog></SearchDialog>
+                <div>
+                    <Link href="/" className="text-2xl font-extrabold tracking-tight lg:text-3xl hover:text-primary transition-colors">
+                        {SITENAME}
+                    </Link>
+                </div>
+                <div className="flex items-center space-x-4">
+                    <div className="hidden md:flex items-center gap-4">
+                        <Link href="/liked" className="hover:bg-accent px-3 py-2 rounded-md transition-colors">
+                            Liked Videos
+                        </Link>
+                        <NavMenu folders={folders} />
+                    </div>
+                    <SearchInput className="hidden md:block w-[300px]" />
+                    <SearchDialog />
+                </div>
             </div>
         </div>
     );
